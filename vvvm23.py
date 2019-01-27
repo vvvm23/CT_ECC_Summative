@@ -21,7 +21,7 @@ def hammingEncoder(m):
         return []
 
     r = 2
-    while (0==0):
+    while (1):
         if k > 2**r - r - 1:
             r += 1
         elif k < 2**r - r - 1:
@@ -42,7 +42,8 @@ def dataFromMessage(m):
     return []
 
 def repetitionEncoder(m, n):
-    return []
+    R = np.array(repetitionGeneratorMatrix(n))
+    return np.outer(m, R).flatten()
 
 def repetitionDecoder(v):
     return []
@@ -83,6 +84,15 @@ def hammingGeneratorMatrix(r):
 
     return G
 
+def parityGeneratorMatrix(n):
+    G = []
+    for i in range(n - 1, -1, -1):
+        G.append(decimalToVector(2**i, n) + [1])
+    return G
+
+def repetitionGeneratorMatrix(n):
+    return [1]*n
+
 def decimalToVector(n,r): 
     v = []
     for s in range(r):
@@ -90,5 +100,4 @@ def decimalToVector(n,r):
         n //= 2
     return v
 
-print(hammingEncoder([1,0,0,0]))
-print(hammingEncoder([0]))
+print(repetitionEncoder([1, 1, 0, 1], 5))
