@@ -30,7 +30,7 @@ def hammingEncoder(m):
             break
 
     G = np.array(hammingGeneratorMatrix(r))
-    return np.dot(m, G)
+    return (np.dot(m, G) % 2).tolist()
 
 def hammingDecoder(v):
     return []
@@ -43,7 +43,7 @@ def dataFromMessage(m):
 
 def repetitionEncoder(m, n):
     R = np.array(repetitionGeneratorMatrix(n))
-    return np.outer(m, R).flatten()
+    return (np.outer(m, R).flatten() % 2).tolist()
 
 def repetitionDecoder(v):
     # Does this need to decode vectors with multiple values in it?
