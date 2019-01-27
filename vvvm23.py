@@ -15,22 +15,37 @@ def message(a):
     return l_b + a + [0] * (2**r - 2*r - 1 - l)
 
 def hammingEncoder(m):
-    pass
+    k = len(m)
+
+    if k < 1:
+        return []
+
+    r = 2
+    while (0==0):
+        if k > 2**r - r - 1:
+            r += 1
+        elif k < 2**r - r - 1:
+            return []
+        else:
+            break
+
+    G = np.array(hammingGeneratorMatrix(r))
+    return np.dot(m, G)
 
 def hammingDecoder(v):
-    pass
+    return []
 
 def messageFromCodeword(c):
-    pass
+    return []
 
 def dataFromMessage(m):
-    pass
+    return []
 
 def repetitionEncoder(m, n):
-    pass
+    return []
 
 def repetitionDecoder(v):
-    pass
+    return []
 
 def hammingGeneratorMatrix(r):
     n = 2**r-1
@@ -75,7 +90,5 @@ def decimalToVector(n,r):
         n //= 2
     return v
 
-print(message([1]))
-print(message([0,0,1]))
-print(message([0,1,1,0]))
-print(message([1,1,1,1,0,1]))
+print(hammingEncoder([1,0,0,0]))
+print(hammingEncoder([0]))
