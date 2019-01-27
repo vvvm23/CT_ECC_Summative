@@ -2,7 +2,17 @@ import numpy as np
 import math as m
 
 def message(a):
-    pass
+    l = len(a)
+    r_min = m.floor(m.log2(l)) + 1
+    if r_min < 2:
+        r_min = 2
+
+    r = r_min
+    while r + l > 2**r - r - 1:
+        r += 1
+
+    l_b = decimalToVector(l, r)
+    return l_b + a + [0] * (2**r - 2*r - 1 - l)
 
 def hammingEncoder(m):
     pass
