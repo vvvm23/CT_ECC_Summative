@@ -46,7 +46,17 @@ def repetitionEncoder(m, n):
     return np.outer(m, R).flatten()
 
 def repetitionDecoder(v):
-    return []
+    # Does this need to decode vectors with multiple values in it?
+    # Eg: 1100 = 10 rather than empty? 
+    n = len(v)
+    S = sum(v)
+    if S > n / 2:
+        return [1]
+    elif S < n / 2:
+        return [0]
+    else:
+        return []
+
 
 def hammingGeneratorMatrix(r):
     n = 2**r-1
@@ -99,5 +109,3 @@ def decimalToVector(n,r):
         v.insert(0,n%2)
         n //= 2
     return v
-
-print(repetitionEncoder([1, 1, 0, 1], 5))
