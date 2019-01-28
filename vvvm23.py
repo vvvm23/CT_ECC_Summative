@@ -62,8 +62,7 @@ def dataFromMessage(m):
     return []
 
 def repetitionEncoder(m, n):
-    R = np.array(repetitionGeneratorMatrix(n))
-    return (np.outer(m, R).flatten() % 2).tolist()
+    return (np.outer(m, np.array(repetitionGeneratorMatrix(n))).flatten() % 2).tolist()
 
 def repetitionDecoder(v):
     # Does this need to decode vectors with multiple values in it?
