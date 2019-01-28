@@ -49,7 +49,7 @@ def hammingDecoder(v):
         m_b = decimalToVector(m_i, 2**r - r - 1)
         m_c = np.dot(m_b, G) % 2
         if hammingDistance(m_c, v) <= 1:
-            return m_c
+            return m_c.tolist()
         else:
             m_i += 1
 
@@ -132,7 +132,3 @@ def decimalToVector(n,r):
 
 def hammingDistance(m, v):
     return sum(list(map(lambda _: _[0] ^ _[1], list(zip(m,v)))))
-
-print(hammingDecoder([1,1,0]))
-print(hammingDecoder([1,0,0,0,0,0,0]))
-print(hammingDecoder([0,1,1,0,0,0,0]))
