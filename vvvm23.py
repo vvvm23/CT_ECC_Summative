@@ -35,7 +35,7 @@ def hammingEncoder(m):
 def hammingDecoder(v):
     k = len(v)
     r = 2
-    while(1):
+    while 1:
         if k > 2**r - 1:
             r += 1
         elif k < 2**r - 1:
@@ -56,10 +56,44 @@ def hammingDecoder(v):
     return []
 
 def messageFromCodeword(c):
-    return []
+    r = 2
+    k = len(c)
+    while 1:
+        if k > 2**r - 1:
+            r += 1
+        elif k < 2**r - 1:
+            return []
+        else:
+            break
+
+    out = []
+    for x in range(2**r - 1):
+        if not m.log2(x+1) == m.floor(m.log2(x+1)):
+            out.append(c[x])
+
+    return out
 
 def dataFromMessage(m):
-    return []
+    r = 2
+    k = len(m)
+    while 1:
+        if k > 2**r - r - 1:
+            r += 1
+        elif k < 2**r - r - 1:
+            return []
+        else:
+            break
+
+    l_b = m[:r]
+    l = 0
+    for i in range(r):
+        l += l_b[i] * 2**(r-i-1)
+
+    if sum(m[r+l:]) > 0 or l + r > k:
+        return []
+
+    return m[r:r+l]
+
 
 def repetitionEncoder(m, n):
     return (np.outer(m, np.array(repetitionGeneratorMatrix(n))).flatten() % 2).tolist()
@@ -132,5 +166,3 @@ def decimalToVector(n,r):
 
 def hammingDistance(m, v):
     return sum(list(map(lambda _: _[0] ^ _[1], list(zip(m,v)))))
-
-print(np.array(parityGeneratorMatrix(3)))
