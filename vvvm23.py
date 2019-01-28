@@ -114,11 +114,12 @@ def hammingGeneratorMatrix(r):
 
     return G
 
-def parityGeneratorMatrix(n):
-    G = []
-    for i in range(n - 1, -1, -1):
-        G.append(decimalToVector(2**i, n) + [1])
-    return G
+def parityGeneratorMatrix(r):
+    H = []
+    for i in range(1, 2**r):
+        H.append(decimalToVector(i, 3))
+
+    return np.array(H).T.tolist()
 
 def repetitionGeneratorMatrix(n):
     return [1]*n
@@ -132,3 +133,5 @@ def decimalToVector(n,r):
 
 def hammingDistance(m, v):
     return sum(list(map(lambda _: _[0] ^ _[1], list(zip(m,v)))))
+
+print(np.array(parityGeneratorMatrix(3)))
