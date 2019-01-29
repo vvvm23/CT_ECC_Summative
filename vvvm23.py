@@ -35,7 +35,7 @@ def hammingEncoder(m):
 
 # Checks for errors in hamming code and corrects if possible
 # Maybe change this to another method other than brute force?
-def hammingDecoder(v):
+'''def hammingDecoder(v):
     k = len(v)
     r = 2
     while 1: # Increment r until valid r found
@@ -49,6 +49,7 @@ def hammingDecoder(v):
     m_i = 0 # Possible message index
     G = np.array(hammingGeneratorMatrix(r))
     while m_i < 2**k - 1:
+        print(m_i,"MAX:",2**k - 1)
         m_b = decimalToVector(m_i, 2**r - r - 1) # Gets binary vector of message
         m_c = np.dot(m_b, G) % 2 # Calculates inner product with generator to get candidate
         if hammingDistance(m_c, v) <= 1: # If candidate is within 1 distance away return candidate
@@ -56,7 +57,35 @@ def hammingDecoder(v):
         else:
             m_i += 1 # ..else increment index
 
-    return [] # If tried all possibilities return empty vector
+    return [] # If tried all possibilities return empty vector'''
+
+def hammingDecoder(v):
+    k = len(v)
+    r = 2
+    while 1:
+        if k > 2**r - 1:
+            r += 1
+        elif k < 2**r - 1:
+            return []
+        else:
+            break
+
+    e_i = 0
+    H = np.array(parityGeneratorMatrix(r))
+    e_b = [0]*k
+
+    while e_i < k + 1:
+        v_c = list(map(lambda x: (x[0] + x[1]) % 2, list(zip(v, e_b))))
+        print("Adding", e_i, ":", v_c)
+        c_c = np.dot(v_c, H.T) % 2
+        print(c_c,"\n")
+        if sum(c_c.tolist()) == 0:
+            return v_c
+
+        e_b = [0]*(k-e_i-1)+[1]+[0]*(e_i)
+        e_i += 1
+
+    return []
 
 # Gets the message from the hamming code
 def messageFromCodeword(c):
