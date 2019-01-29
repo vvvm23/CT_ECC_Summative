@@ -93,6 +93,7 @@ def messageFromCodeword(c):
         if k > 2**r - 1:
             r += 1
         elif k < 2**r - 1:
+            print("messageFromCodeword returns []")
             return []
         else:
             break
