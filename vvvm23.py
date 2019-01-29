@@ -194,7 +194,7 @@ def hammingGeneratorMatrix(r):
 def parityGeneratorMatrix(r):
     H = []
     for i in range(1, 2**r): # Let rows be binary vectors from 1 to 2**r - 1
-        H.append(decimalToVector(i, 3))
+        H.append(decimalToVector(i, r))
 
     # Transform and return (or don't bother transforming to save time later)
     return np.array(H).T.tolist() 
