@@ -76,9 +76,7 @@ def hammingDecoder(v):
 
     while e_i < k + 1:
         v_c = list(map(lambda x: (x[0] + x[1]) % 2, list(zip(v, e_b))))
-        print("Adding", e_i, ":", v_c)
         c_c = np.dot(v_c, H.T) % 2
-        print(c_c,"\n")
         if sum(c_c.tolist()) == 0:
             return v_c
 
@@ -102,6 +100,7 @@ def messageFromCodeword(c):
     # Try and make this into a nice one liner?
     out = []
     for x in range(2**r - 1):
+        # if not sum(decimalToVector(x+1)) == 1
         if not m.log2(x+1) == m.floor(m.log2(x+1)): # If not power of 2 append to output
             out.append(c[x])
 
@@ -141,14 +140,17 @@ def repetitionEncoder(m, n):
 def repetitionDecoder(v):
     # Does this need to decode vectors with multiple values in it?
     # Eg: 1100 = 10 rather than empty? 
-    n = len(v)
+
+    return [1] if sum(v) > len(v) / 2 else [0] if sum(v) < len(v) / 2 else []
+
+    '''n = len(v)
     S = sum(v)
     if S > n / 2: # If sum is greater than half of length then it was 1
         return [1]
     elif S < n / 2: # If sum is less than half of length then it was 0
         return [0]
     else: # If sum = half of length cannot determine
-        return []
+        return []'''
 
 # Generates an r-hamming generator matrix
 def hammingGeneratorMatrix(r):
