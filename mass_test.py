@@ -1,9 +1,9 @@
 from vvvm23 import *
 import random
 
-nb_test_one = 100
-nb_test_two = 100
-nb_test_three = 10
+nb_test_one = 1000
+nb_test_two = 1000
+nb_test_three = 1000
 
 # Test of full cycle with no bit changes #
 r = m.floor(m.log2(nb_test_one)) + 1
@@ -31,16 +31,14 @@ for i in range(nb_test_two):
 
 # Test of full cycle with two bit changes #
 r = m.floor(m.log2(nb_test_three)) + 1
+count = 0
+correct = 0
 for i in range(nb_test_three):
     c = decimalToVector(i, r)
     c_message = message(c)
     c_h = hammingEncoder(c_message)
 
     j = random.sample(range(len(c_h) - 1), 2)
-    print("\nTesting:", i, "; Flipping", j[0], j[1])
-    print("Original:", c)
-    print("message:", c_message)
-    print("hammingEncoder:", c_h)
     c_h[j[0]] = (c_h[j[0]] + 1) % 2
     c_h[j[1]] = (c_h[j[1]] + 1) % 2
 
@@ -48,8 +46,8 @@ for i in range(nb_test_three):
     c_codeword = messageFromCodeword(c_decode)
     c_data = dataFromMessage(c_codeword)
 
-    print("flipped:", c_h)
-    print("hammingDecode:", c_decode)
-    print("messageFromCodeword:",c_codeword)
-    print("dataFromMessage:",c_data)
-    assert [] == c_data
+    count += 1
+    if c_data == []:
+        correct += 1
+
+print("{0}/{1}".format(correct, count))

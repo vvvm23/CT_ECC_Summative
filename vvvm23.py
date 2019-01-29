@@ -48,7 +48,7 @@ def hammingEncoder(m):
 
     m_i = 0 # Possible message index
     G = np.array(hammingGeneratorMatrix(r))
-    while m_i < 2**k - 1:
+    while m_i < 2**k - 1:s
         print(m_i,"MAX:",2**k - 1)
         m_b = decimalToVector(m_i, 2**r - r - 1) # Gets binary vector of message
         m_c = np.dot(m_b, G) % 2 # Calculates inner product with generator to get candidate
@@ -60,6 +60,7 @@ def hammingEncoder(m):
     return [] # If tried all possibilities return empty vector'''
 
 def hammingDecoder(v):
+    print("")
     k = len(v)
     r = 2
     while 1:
@@ -80,7 +81,8 @@ def hammingDecoder(v):
         if sum(c_c.tolist()) == 0:
             return v_c
 
-        e_b = [0]*(k-e_i-1)+[1]+[0]*(e_i)
+        e_b = [0]*(k-e_i-1)+[1]+[0]*(e_i) #This index is suspicious..or not
+        print(e_b)
         e_i += 1
 
     return []
@@ -93,7 +95,6 @@ def messageFromCodeword(c):
         if k > 2**r - 1:
             r += 1
         elif k < 2**r - 1:
-            print("messageFromCodeword returns []")
             return []
         else:
             break
@@ -136,6 +137,7 @@ def repetitionEncoder(m, n):
     # Get the outer product of m and repetition G matrix.
     # Then flatten to obtain code vector
     return (np.outer(m, np.array(repetitionGeneratorMatrix(n))).flatten() % 2).tolist()
+
 
 # Decodes a repeated array into one bit
 def repetitionDecoder(v):
@@ -216,3 +218,19 @@ def hammingDistance(m, v):
     # Creates list of tuples m and v and applies xor
     #..then sum resulting list to obtain distance
     return sum(list(map(lambda _: _[0] ^ _[1], list(zip(m,v)))))
+'''
+print("Nuffin.")
+print([1,0,0,1,1,0,1])
+print(dataFromMessage(messageFromCodeword([1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1])))
+print("\nFlip one bit")
+print(dataFromMessage(messageFromCodeword(hammingDecoder([1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1]))))
+print(dataFromMessage(messageFromCodeword(hammingDecoder([1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1]))))
+print(dataFromMessage(messageFromCodeword(hammingDecoder([1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1]))))
+print("\nFlip two bits")
+print(dataFromMessage(messageFromCodeword(hammingDecoder([1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1]))))
+print(dataFromMessage(messageFromCodeword(hammingDecoder([1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1]))))
+print(dataFromMessage(messageFromCodeword(hammingDecoder([1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1]))))
+print(dataFromMessage(messageFromCodeword(hammingDecoder([1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1]))))
+#print("[1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1]")
+#print(dataFromMessage(messageFromCodeword(hammingDecoder([1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1]))))
+#print("\n",dataFromMessage(messageFromCodeword(hammingDecoder([0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0]))))'''
