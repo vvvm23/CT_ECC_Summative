@@ -3,6 +3,9 @@ import math as m
 
 # Converts from data to message format
 def message(a):
+    if not valid_vector(a):
+        return []
+
     l = len(a)
     r_min = m.floor(m.log2(l)) + 1 # Calculates minimum r. Could just start with r=2?
     if r_min < 2:
@@ -17,6 +20,9 @@ def message(a):
 
 # Converts message into hamming code
 def hammingEncoder(m):
+    if not valid_vector(m):
+        return []
+
     k = len(m)
     if k < 1:
         return []
@@ -88,6 +94,8 @@ def hammingEncoder(m):
     return []'''
 
 def hammingDecoder(v):
+    if not valid_vector(v):
+        return []
     k = len(v)
     r = 2
 
@@ -114,6 +122,8 @@ def hammingDecoder(v):
     
 # Gets the message from the hamming code
 def messageFromCodeword(c):
+    if not valid_vector(c):
+        return []
     r = 2
     k = len(c)
     while 1: # Increments r until valid r found
@@ -135,6 +145,8 @@ def messageFromCodeword(c):
 
 # Gets original data from message
 def dataFromMessage(m):
+    if not valid_vector(m):
+        return []
     r = 2
     k = len(m)
     while 1: # Increment r until valid r found
@@ -159,6 +171,8 @@ def dataFromMessage(m):
 
 # Repetition encodes a message n times
 def repetitionEncoder(m, n):
+    if not valid_vector(m):
+        return []
     # Get the outer product of m and repetition G matrix.
     # Then flatten to obtain code vector
     return (np.outer(m, np.array(repetitionGeneratorMatrix(n))).flatten() % 2).tolist()
@@ -166,6 +180,8 @@ def repetitionEncoder(m, n):
 
 # Decodes a repeated array into one bit
 def repetitionDecoder(v):
+    if not valid_vector(v):
+        return []
     # Does this need to decode vectors with multiple values in it?
     # Eg: 1100 = 10 rather than empty? 
 
@@ -244,6 +260,24 @@ def hammingDistance(m, v):
     #..then sum resulting list to obtain distance
     return sum(list(map(lambda _: _[0] ^ _[1], list(zip(m,v)))))
 
+def valid_vector(v):
+    if type(v) != list:
+        print("failing as not list")
+        return False
+    else:
+        if len(v) == 0:
+            print("failing as length 0")
+            return False
+
+        for _ in v:
+            if not type(_) == int:
+                print("failing as not int")
+                return False
+            if not _ in [0, 1]:
+                print("failing as not binary")
+                return False
+            
+    return True
 '''print("Nuffin.")
 print([1,0,0,1,1,0,1])
 print(dataFromMessage(messageFromCodeword([1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1])))
@@ -260,3 +294,4 @@ print(dataFromMessage(messageFromCodeword(hammingDecoder([1, 1, 0, 1, 0, 1, 1, 0
 #print(dataFromMessage(messageFromCodeword(hammingDecoder([1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1]))))
 #print("\n",dataFromMessage(messageFromCodeword(hammingDecoder([0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0]))))
 '''
+
