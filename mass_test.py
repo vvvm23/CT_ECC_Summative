@@ -1,9 +1,9 @@
 from vvvm23 import *
 import random
 
-nb_test_one = 1000
-nb_test_two = 1000
-nb_test_three = 1000
+nb_test_one = 100
+nb_test_two = 100
+nb_test_three = 10
 
 # Test of full cycle with no bit changes #
 r = m.floor(m.log2(nb_test_one)) + 1
@@ -19,7 +19,6 @@ for i in range(nb_test_two):
     c_encode = hammingEncoder(c_message)
 
     j = random.randint(0, len(c_encode) - 1)
-
 
     c_encode[j] = (c_encode[j] + 1) % 2
 

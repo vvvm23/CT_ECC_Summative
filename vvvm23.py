@@ -22,7 +22,7 @@ def hammingEncoder(m):
         return []
 
     r = 2
-    while (1): # Increments r until valid r found
+    while 1: # Increments r until valid r found
         if k > 2**r - r - 1:
             r += 1
         elif k < 2**r - r - 1:
@@ -59,7 +59,7 @@ def hammingEncoder(m):
 
     return [] # If tried all possibilities return empty vector'''
 
-def hammingDecoder(v):
+'''def hammingDecoder(v):
     print("")
     k = len(v)
     r = 2
@@ -85,8 +85,38 @@ def hammingDecoder(v):
         print(e_b)
         e_i += 1
 
-    return []
+    return []'''
 
+def hammingDecoder(v):
+    k = len(v)
+    r = 2
+    t = 0 
+
+    while 1:
+        if k > 2**r - 1:
+            r += 1
+        elif k < 2**r - 1:
+            return []
+        else:
+            break
+
+    H = np.array(parityGeneratorMatrix(r))
+    while 1:
+        v_H = (np.dot(v, H.T) % 2).tolist()
+        i = sum([v_H[j]*2**(r-j - 1) for j in range(r)])
+
+        if i == 0:
+            return v
+        elif i > 2**r - 1:
+            return []
+        else:
+            v[i-1] = (v[i-1] + 1) % 2
+            print("fixing error. t =", t)
+            if t > 0:
+                return []
+            else:
+                t += 1
+    
 # Gets the message from the hamming code
 def messageFromCodeword(c):
     r = 2
