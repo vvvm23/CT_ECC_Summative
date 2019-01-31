@@ -90,7 +90,6 @@ def hammingEncoder(m):
 def hammingDecoder(v):
     k = len(v)
     r = 2
-    t = 0 
 
     while 1:
         if k > 2**r - 1:
@@ -101,21 +100,17 @@ def hammingDecoder(v):
             break
 
     H = np.array(parityGeneratorMatrix(r))
-    while 1:
-        v_H = (np.dot(v, H.T) % 2).tolist()
-        i = sum([v_H[j]*2**(r-j - 1) for j in range(r)])
 
-        if i == 0:
-            return v
-        elif i > 2**r - 1:
-            return []
-        else:
-            v[i-1] = (v[i-1] + 1) % 2
-            print("fixing error. t =", t)
-            if t > 0:
-                return []
-            else:
-                t += 1
+    v_H = (np.dot(v, H.T) % 2).tolist()
+    i = sum([v_H[j]*2**(r-j - 1) for j in range(r)])
+
+    if i == 0:
+        return v
+    elif i > 2**r - 1:
+        return []
+    else:
+        v[i-1] = (v[i-1] + 1) % 2
+    return v
     
 # Gets the message from the hamming code
 def messageFromCodeword(c):
@@ -248,8 +243,8 @@ def hammingDistance(m, v):
     # Creates list of tuples m and v and applies xor
     #..then sum resulting list to obtain distance
     return sum(list(map(lambda _: _[0] ^ _[1], list(zip(m,v)))))
-'''
-print("Nuffin.")
+
+'''print("Nuffin.")
 print([1,0,0,1,1,0,1])
 print(dataFromMessage(messageFromCodeword([1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1])))
 print("\nFlip one bit")
@@ -263,4 +258,5 @@ print(dataFromMessage(messageFromCodeword(hammingDecoder([1, 1, 0, 0, 1, 0, 0, 0
 print(dataFromMessage(messageFromCodeword(hammingDecoder([1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1]))))
 #print("[1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1]")
 #print(dataFromMessage(messageFromCodeword(hammingDecoder([1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1]))))
-#print("\n",dataFromMessage(messageFromCodeword(hammingDecoder([0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0]))))'''
+#print("\n",dataFromMessage(messageFromCodeword(hammingDecoder([0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0]))))
+'''

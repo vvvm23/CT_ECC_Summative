@@ -1,8 +1,8 @@
 from vvvm23 import *
 import random
 
-nb_test_one = 100
-nb_test_two = 100
+nb_test_one = 10000
+nb_test_two = 10000
 nb_test_three = 10
 
 # Test of full cycle with no bit changes #
